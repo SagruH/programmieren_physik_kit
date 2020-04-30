@@ -1,4 +1,14 @@
+/*@ Tutor
+Das Programm erfüllt das was verlangt ist und kann noch mehr da ich keinen
+Grund sahe die entsprechenden Variablen hard zu coden statt
+durch den Nutzer eingeben zu lassen.
 
+Wäre das bei bepunkteten Aufgaben trotzdem so in Ordung?
+
+Zu der Frage in Zeile 34: Mir ist bewusst das nur div != 0 ausreichend ist,
+aber warum geht es mit beiden Bedingungen nicht und es verhält sich so,
+als wäre nur r != 0 als Bedingung gegeben?
+*/
 // github: https://github.com/SagruH/programmieren_physik_kit
 
 #include <iostream>
@@ -12,20 +22,16 @@ using namespace std;
 string base_converter(int div, int base) {
   string r_str, baseXnum = "";
   int r;
-  cout << "div  " << div << endl;
   do {
-    div = div / base;
     r = div % base;
-
-    if (r==0) { break; }
-
+    div = div / base;
+    //cout << " div , r  " << div << r << endl; //debug
 
     r_str = to_string(r);
-    cout << "r_str  " <<  r_str << endl;
     baseXnum = r_str + baseXnum;
-    cout << "baseXnum  " << baseXnum << endl;
-  } while(r != 0);
-
+    //cout << "r_str  " <<  r_str << endl; //debug
+    //cout << "baseXnum  " << baseXnum << endl; //debug
+  } while(div != 0); //@Tutor warum geht das nicht wenn ich div != 0 && r != 0 benutze?
   return baseXnum;
 }
 
