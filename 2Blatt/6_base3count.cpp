@@ -1,3 +1,6 @@
+
+// github: https://github.com/SagruH/programmieren_physik_kit
+
 #include <iostream>
 #include <cmath>
 #include <chrono>
