@@ -5,19 +5,19 @@ using namespace std;
 
 int main(int argc, char const *argv[]) {
 
-  int produkt, n;
+  int produkt = 1, n;
 
   cout << "Enter N: ";
   cin >> n;
 
-  for(int i = 1 ; i<=N ; i++) {
+  for(int i = 1 ; i<=n ; i++) {
 
     cout << "For i = " << i-1 << " : Produkt = " << produkt << endl;
-    produkt = produkt + (3*i - 1)
+    produkt = produkt * (3*i - 1);
 
   }
 
-  cout << "Final result = " << produkt << endl;
+  cout << "Final product = " << produkt << endl;
 
   return 0;
 }
