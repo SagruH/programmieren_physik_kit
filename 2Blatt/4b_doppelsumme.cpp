@@ -15,10 +15,9 @@ int main(int argc, char const *argv[]) {
   cout << "--- Doppelsumme ---" << endl << "Enter N: ";
   cin >> n;
 
-  for(int i = 1 ; i <= n ; i++){
+  for(int i = 1 ; i <= n ; i++) {
     //cout << i << endl; //debug
-    for(int j = 1 ; j <= i ; j++){
-
+    for(int j = 1 ; j <= i ; j++) {
       summe = summe + (1.0/(i*j)); //prevent int / int --> 1.0 not 1
       //cout << j << " // " << summe << endl; //debug
     }

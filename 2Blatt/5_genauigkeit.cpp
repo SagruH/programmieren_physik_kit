@@ -16,11 +16,9 @@ int main(int argc, char const *argv[]) {
   int i = -1;
 
   do {
-
     e = e/2;
     xe = x+e;
     i++;
-
   } while(x != xe);
 
   cout << "1 + \u03B5 \u2260 1 bis \u03B5 = "
