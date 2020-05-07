@@ -20,15 +20,20 @@ int main(int argc, char const *argv[]) {
 
   auto t_start = chrono::high_resolution_clock::now();
 
-  if (num[0]) {
-    /* code */
-  } else if (/* condition */) {
-    /* code */
+  if (a==b || a==c || b==c ) {
+    printf("ERROR: Gib 3 VERSCHIEDENE Zahlen ein!\n" );
+    return 0;
+  } else if ((a<b && a>c) || (a>b && a<c)) {
+    mittel = a;
+  } else if ((a<b && b<c) || (a>b && b>c)) {
+    mittel = b;
+  } else if ((c<b && a<c) || (c>b && a>c)) {
+    mittel = c;
   } else {
-    /* code */
+    cout << "ERROR" << '\n';
   }
 
-
+  printf("Die mittlere Zahl ist: %f .\n",mittel);
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
