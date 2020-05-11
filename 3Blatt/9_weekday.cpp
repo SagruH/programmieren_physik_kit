@@ -29,13 +29,13 @@ int main(int argc, char const *argv[]) {
   //ERROR TESTS
   short in_y = ly_test(y);
   if ((d >= 32) || (m >= 12)) {
-    printf("Invalid date!\n");
+    printf("Invalid date!\n Too many days / months.\n");
     return 0;
   } else if ((m == 2) && (((d > 29) && (in_y == 1)) || ((d > 28) && (in_y == 0)))) {
-    printf("Invalid date!\n");
+    printf("Invalid date!\n February has less days.\n");
     return 0;
-  } else if ((m == (4,6,9,11)) && (d >= 31)) {
-    printf("Invalid date!\n");
+  } else if (((m == 4) || (m == 6) || (m == 9) || (m == 11)) && (d >= 31)) {
+    printf("Invalid date!\n This month has only 30 days.\n");
     return 0;
   } else if (y <= 1581) {
     printf("Date before Gregorian calendar.\n");
