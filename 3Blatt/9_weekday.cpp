@@ -29,7 +29,7 @@ int main(int argc, char const *argv[]) {
   auto t_start = chrono::high_resolution_clock::now();
   //ERROR TESTS
   short in_y = ly_test(y);
-  if ((d >= 32) || (m >= 12)) {
+  if ((d > 31) || (m > 12)) {
     printf("Invalid date!\n Too many days / months.\n");
     return 0;
   } else if ((m == 2) && (((d > 29) && (in_y == 1)) || ((d > 28) && (in_y == 0)))) {
@@ -38,11 +38,13 @@ int main(int argc, char const *argv[]) {
   } else if (((m == 4) || (m == 6) || (m == 9) || (m == 11)) && (d >= 31)) {
     printf("Invalid date!\n This month has only 30 days.\n");
     return 0;
-  } else if (y <= 1581) {
-    printf("Date before Gregorian calendar.\n");
+  } else if (y < 1871) {
+    printf("Year to small. Choose a Date later then 1870.\n");
+    printf("Date before Gregorian calendar in Germany.\n");
+    return 0;
   }
 
-  //reference date 1.1.2018
+  //reference date 1.1.1871 (Formation fo German Empire)
   string weekdays[7] = {"Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
 
   dsr += d;
@@ -64,7 +66,26 @@ int main(int argc, char const *argv[]) {
     m--;
   }
 
-  printf("%d\n",dsr );
+  int dy = 1871 - y;
+  dy *= (-1);
+  for (int i = 0; i < dy; i++) {
+    if (dy < 0) {
+      y--;
+    } else {
+      y++;
+    }
+    short is_ly = ly_test(y);
+    if (is_ly == 1) {
+      dsr += 366;
+    } else {
+      dsr += 365;
+    }
+  }
+
+  dsr--;
+  int day_index = dsr % 7;
+  string day = weekdays[day_index-1];
+  cout << day << endl;
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
