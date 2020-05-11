@@ -20,10 +20,16 @@ int binom_co(int n, int k) {
 int main(int argc, char const *argv[]) {
   auto t_start = chrono::high_resolution_clock::now();
 
-  int line = 10;
-  int sol = binom_co(8,6);
+  int lines = 9;
 
-  cout << sol << endl;
+  for (int up = 0; up <= lines; up++) {
+    for (int down = 0; down <= up; down++) {
+      int sol = binom_co(up, down);
+      printf(" %d ", sol);
+    }
+    cout << endl;
+  }
+
 
 
   auto t_end = chrono::high_resolution_clock::now();
