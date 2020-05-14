@@ -44,7 +44,7 @@ int main(int argc, char const *argv[]) {
     return 0;
   }
 
-  //reference date 1.1.1871 (Formation fo German Empire)
+  //reference date 1.1.1871 (Formation of German Empire)
   string weekdays[7] = {"Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
 
   dsr += d;
