@@ -36,12 +36,14 @@ vector<vector<int>> readfile(string filename, int n) { //columns ; lines
 int main(int argc, char const *argv[]) {
   auto t_start = chrono::high_resolution_clock::now();
 
+  //ini and read file to 2d vector
   int col = 11;
   int l = 7;
   int g = 0;
   vector<vector <int>> content;
   content = readfile("a11-toredat.sec",col);
 
+  //sum of goals and max
   vector<int> goals;
   for (size_t i = 0; i < l; i++) {
     for (size_t j = 1; j < col; j++) {
@@ -53,6 +55,7 @@ int main(int argc, char const *argv[]) {
 
   int max = *max_element(goals.begin(), goals.end());
 
+  //Output
   printf("TEAM  ||             GOALS               || SUM");
   printf("\n------------------------------------------------------------");
   for (size_t i = 0; i < l; i++) {
