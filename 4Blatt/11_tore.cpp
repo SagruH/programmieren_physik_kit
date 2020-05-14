@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <chrono>
+#include <fstream>
 
 
 using namespace std;
@@ -12,21 +13,15 @@ using namespace std;
 int main(int argc, char const *argv[]) {
   auto t_start = chrono::high_resolution_clock::now();
 
-  FILE *fp;
-  fp = fopen ("a11-toredat.sec","r");
-  if (fp!=NULL)
-  {
-    fscanf(fp,"Some String\n");
-    fclose (fp);
+  fstream goalfile("a11-toredat.sec", ios_base::in);
+  int a;
+  while (goalfile >> a) {
+    printf("%i ", a);
   }
-
-  //code
-
-
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
-  cout << "Runtime: " << runtime.count() << "s\n";
+  cout << endl << "Runtime: " << runtime.count() << "s\n";
 
   return 0;
 }

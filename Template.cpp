@@ -20,7 +20,7 @@ int main(int argc, char const *argv[]) {
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
-  cout << "Runtime: " << runtime.count() << "s\n";
+  cout << endl << "Runtime: " << runtime.count() << "s\n";
 
   return 0;
 }
