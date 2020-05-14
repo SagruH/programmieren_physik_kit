@@ -10,37 +10,35 @@
 
 using namespace std;
 
-int readfile(string filename, int n, int l) { //columns ; lines
+vector<vector<int>> readfile(string filename, int n) { //columns ; lines
   fstream ffile;
   ffile.open(filename, ios::in);
-
   int a;
-  int i=0;
-  int j=0;
-  int content[n][l] = {0};
+  int i=0, j=0;
+  vector<vector <int>> content;
+  vector<int> temp;
 
   while (ffile >> a) {
-    content[i][j] = a;
+    temp.push_back(a);
     i++;
     if (i==n) {
       i=0;
-      j++;
+      content.push_back(temp);
+      temp.clear();
     }
   }
 
   ffile.close();
-  return 0;
+  return content;
 }
-
 
 int main(int argc, char const *argv[]) {
   auto t_start = chrono::high_resolution_clock::now();
-  /*
+
   int col = 11;
-  int l = 7;
-  int content[col][l] = {0};
-  content = readfile("a11-toredat.sec",col,l);
-  */
+  vector<vector <int>> content;
+  content = readfile("a11-toredat.sec",col);
+  cout << content[0][0];
 
 
   auto t_end = chrono::high_resolution_clock::now();
