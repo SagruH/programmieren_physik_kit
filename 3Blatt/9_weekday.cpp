@@ -84,6 +84,7 @@ int main(int argc, char const *argv[]) {
 
   dsr--;
   int day_index = dsr % 7;
+  if(day_index-1 == -1) day_index = 7;
   string day = weekdays[day_index-1];
   cout << day << endl;
 
