@@ -1,5 +1,5 @@
 
-//reads 2D file ; inculde fstream; vector; 
+//reads 2D file ; inculde fstream; vector;
 vector<vector<int>> readfile(string filename, int n) { //columns ; lines
   fstream ffile;
   ffile.open(filename, ios::in);
@@ -20,4 +20,14 @@ vector<vector<int>> readfile(string filename, int n) { //columns ; lines
 
   ffile.close();
   return content;
+}
+
+//prints 2D Martix; include vector
+void printMatrix(vector<vector<double>> matrix, int n, int m) {
+  for (size_t i = 0; i < n; i++) {
+    for (size_t j = 0; j < m; j++) {
+      cout << " " << matrix[i][j] << " ";
+    }
+    cout << endl;
+  }
 }

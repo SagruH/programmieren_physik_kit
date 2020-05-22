@@ -9,6 +9,11 @@
 
 using namespace std;
 
+//@Tutor
+//Die Datei wurde minimal verändert um die Funktion aus Aufgabe 11 verwenden zu können.
+//Bitte die Angehängte Datei benutzen. ( Es wurden die Zeile mit der Spaltenanzahl entfernt. )
+
+//Funktion zum Datei einlesen
 vector<vector<double>> readfile(string filename, int n) { //columns ; lines
   fstream ffile;
   ffile.open(filename, ios::in);
@@ -31,18 +36,23 @@ vector<vector<double>> readfile(string filename, int n) { //columns ; lines
   return content;
 }
 
-
+//gibt LGS aus
+void printLGS(vector<vector<double>> matrix, int n, int m) {
+  for (size_t i = 0; i < n; i++) {
+    for (size_t j = 0; j < m; j++) {
+      printf("  %5g  ",matrix[i][j] );
+      if (j == (m-1)) printf(" | %5g\n",matrix[n][i] );
+    }
+  }
+}
 
 int main(int argc, char const *argv[]) {
   auto t_start = chrono::high_resolution_clock::now();
+
   vector<vector<double>> a_matrix;
+
   a_matrix = readfile("a13-lgs1.dat",8);
-  for (size_t i = 0; i < 8; i++) {
-    for (size_t j = 0; j < 9; j++) {
-      cout << " " << a_matrix[i][j] << " ";
-    }
-    cout << endl;
-  }
+  printLGS(a_matrix,8,8);
 
 
 
