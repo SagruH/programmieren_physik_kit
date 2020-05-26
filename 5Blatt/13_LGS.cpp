@@ -12,10 +12,6 @@
 
 using namespace std;
 
-//@Tutor
-//Die Datei wurde minimal verändert um die Funktion aus Aufgabe 11 verwenden zu können.
-//Bitte die Angehängte Datei benutzen. ( Es wurden die Zeile mit der Spaltenanzahl entfernt. )
-
 //Funktion zum Datei einlesen
 tuple<vector<vector<double>>, int> readfile(string filename) { //columns ; lines
   fstream ffile;
