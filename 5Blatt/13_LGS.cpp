@@ -8,6 +8,7 @@
 #include <fstream>
 #include <algorithm> //transform fill
 #include <functional> // multiplies
+#include <tuple>
 
 using namespace std;
 
@@ -16,15 +17,20 @@ using namespace std;
 //Bitte die Angehängte Datei benutzen. ( Es wurden die Zeile mit der Spaltenanzahl entfernt. )
 
 //Funktion zum Datei einlesen
-vector<vector<double>> readfile(string filename, int n) { //columns ; lines
+tuple<vector<vector<double>>, int> readfile(string filename) { //columns ; lines
   fstream ffile;
   ffile.open(filename, ios::in);
   double a;
   int i=0, j=0;
   vector<vector <double>> content;
   vector<double> temp;
-
+  int is_n = 1;
+  int n;
   while (ffile >> a) {
+    if (is_n==1) {
+      is_n=0;
+      n = a;
+    } else {
     temp.push_back(a);
     i++;
     if (i==n) {
@@ -32,10 +38,11 @@ vector<vector<double>> readfile(string filename, int n) { //columns ; lines
       content.push_back(temp);
       temp.clear();
     }
+    }
   }
 
   ffile.close();
-  return content;
+  return make_tuple(content, n);
 }
 
 //gibt LGS aus
@@ -50,8 +57,9 @@ void printLGS(vector<vector<double>> matrix, int n, int m) {
 }
 // Einführung von Matrix operationen
 //multipliziert zeile a mit x und addiert auf zeile b, gibt ganze Matrix zurück
-vector<vector<double>> matrix_line_add(vector<vector<double>> matrix, int a, int b, double x) {
-  int rl = 8;
+vector<vector<double>> matrix_line_add(vector<vector<double>> matrix,
+                                        int n, int a, int b, double x) {
+  int rl = n;
   vector<double> aline = matrix[a];
   vector<double> bline = matrix[b];
   aline.push_back(matrix[rl][a]);
@@ -78,9 +86,9 @@ vector<vector<double>> matrix_line_add(vector<vector<double>> matrix, int a, int
   return matrix;
 }
 //Zeilentausch
-vector<vector<double>> line_swap(vector<vector<double>> matrix, int a, int b) {
+vector<vector<double>> line_swap(vector<vector<double>> matrix, int n, int a, int b) {
   swap(matrix[a],matrix[b]);
-  swap(matrix[8][a],matrix[8][b]);
+  swap(matrix[n][a],matrix[n][b]);
   return matrix;
 }
 
@@ -98,10 +106,10 @@ int main(int argc, char const *argv[]) {
 
   auto t_start = chrono::high_resolution_clock::now();
   vector<vector<double>> a_matrix;
+  int n;
 
-  a_matrix = readfile("a13-lgs1.dat",8);
-  printLGS(a_matrix,8,8);
-
+  tie(a_matrix, n) = readfile("a13-lgs1.dat");
+  printLGS(a_matrix,n,n);
   //Dreiecksform
 
 
