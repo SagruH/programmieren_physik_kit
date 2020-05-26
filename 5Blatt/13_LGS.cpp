@@ -6,6 +6,8 @@
 #include <chrono>
 #include <vector>
 #include <fstream>
+#include <algorithm> //transform fill
+#include <functional> // multiplies
 
 using namespace std;
 
@@ -46,6 +48,42 @@ void printLGS(vector<vector<double>> matrix, int n, int m) {
     }
   }
 }
+// Einführung von Matrix operationen
+//multipliziert zeile a mit x und addiert auf zeile b, gibt ganze Matrix zurück
+vector<vector<double>> matrix_line_add(vector<vector<double>> matrix, int a, int b, double x) {
+  int rl = 8;
+  vector<double> aline = matrix[a];
+  vector<double> bline = matrix[b];
+  aline.push_back(matrix[rl][a]);
+  bline.push_back(matrix[rl][b]);
+  vector<double> xline (rl+1);
+  fill(xline.begin(), xline.end(), x);
+
+  //(aline * x) + bline = matrix[b]
+  transform(aline.begin(), aline.end(), xline.begin(), aline.begin(), multiplies<double>());
+  transform(aline.begin(), aline.end(), bline.begin(), bline.begin(), plus<double>());
+  matrix[rl][b] = bline[rl];
+  bline.pop_back();
+  cout << bline[rl]<< endl;
+  matrix[b] = bline;
+  //DEBUG
+  /*
+  for (size_t i = 0; i < 9; i++) {cout << aline[i] << " ";}
+  cout << endl;
+  for (size_t i = 0; i < 9; i++) {cout << bline[i] << " ";}
+  cout << endl;
+  for (size_t i = 0; i < 9; i++) {cout << xline[i] << " ";}
+  cout << endl;
+  */
+  return matrix;
+}
+//Zeilentausch
+vector<vector<double>> line_swap(vector<vector<double>> matrix, int a, int b) {
+  swap(matrix[a],matrix[b]);
+  swap(matrix[8][a],matrix[8][b]);
+  return matrix;
+}
+
 
 int main(int argc, char const *argv[]) {
   //Pivotiserungs abfrage
@@ -65,6 +103,8 @@ int main(int argc, char const *argv[]) {
   printLGS(a_matrix,8,8);
 
   //Dreiecksform
+
+
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
