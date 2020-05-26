@@ -51,9 +51,9 @@ void printLGS(vector<vector<double>> matrix, int n, int m) {
     }
   }
 }
-// Einführung von Matrix operationen
+// Einführung von matrix operationen
 //multipliziert zeile a mit x und addiert auf zeile b, gibt ganze Matrix zurück
-vector<vector<double>> matrix_line_add(vector<vector<double>> matrix,
+vector<vector<double>> line_add(vector<vector<double>> matrix,
                                         int n, int a, int b, double x) {
   int rl = n;
   vector<double> aline = matrix[a];
@@ -68,7 +68,6 @@ vector<vector<double>> matrix_line_add(vector<vector<double>> matrix,
   transform(aline.begin(), aline.end(), bline.begin(), bline.begin(), plus<double>());
   matrix[rl][b] = bline[rl];
   bline.pop_back();
-  cout << bline[rl]<< endl;
   matrix[b] = bline;
   //DEBUG
   /*
@@ -102,13 +101,25 @@ int main(int argc, char const *argv[]) {
 
   auto t_start = chrono::high_resolution_clock::now();
   vector<vector<double>> a_matrix;
-  int n;
+  int n,x;
 
   tie(a_matrix, n) = readfile("a13-lgs1.dat");
   printLGS(a_matrix,n,n);
   //Dreiecksform
+  if (pivot == 0) {
+    for (size_t i = 0; i < n; i++) {
+      for (size_t j = 1; j < n; j++) {
+        x = (a_matrix[j+i][i])/(a_matrix[i][i]);
+        a_matrix = line_add(a_matrix, n, i, (i+j), x);
+      }
+    }
+  } else if (pivot == 1) {
+    /* code */
+  } else {
+    printf("ERROR! (pivot) \n");
+  }
 
-
+  //printLGS(a_matrix,n,n);
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
