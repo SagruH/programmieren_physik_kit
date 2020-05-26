@@ -46,7 +46,7 @@ void printLGS(vector<vector<double>> matrix, int n, int m) {
   printf("-----   LGS   -----\n");
   for (size_t i = 0; i < n; i++) {
     for (size_t j = 0; j < m; j++) {
-      printf("  %8g  ",matrix[i][j] );
+      printf("  %12g  ",matrix[i][j] );
       if (j == (m-1)) printf(" | %6g\n",matrix[n][i] );
     }
   }
@@ -87,6 +87,33 @@ vector<vector<double>> line_swap(vector<vector<double>> matrix, int n, int a, in
   return matrix;
 }
 
+//findet pivot element in gegebner spalte
+int pivot_find(vector<vector<double>> matrix, int n, int e) {
+  vector<double> temp;
+  int pivotE;
+  for (size_t i = e; i < n; i++) {
+    temp.push_back(abs(matrix[i][e]));
+    //printf(" %5g ", abs(matrix[i][e])); //DEBUG
+  }
+  double pivotNum = *max_element(temp.begin(), temp.end());
+  //cout << endl << pivotNum << endl; // DEBUG
+  for (size_t i = 0; i < (n-e); i++) {
+    if (pivotNum == temp[i]) {
+      pivotE = i+e;
+    }
+  }
+  return pivotE;
+}
+
+/*
+for (size_t i = 0; i < n; i++) {
+  vector<double> temp;
+  temp = matrix[i];
+  temp.push_back(matrix[n][i]);
+  matrix[i] = temp;
+}
+matrix.pop_back();
+*/
 
 int main(int argc, char const *argv[]) {
   //Pivotiserungs abfrage
@@ -103,12 +130,14 @@ int main(int argc, char const *argv[]) {
   vector<vector<double>> a_matrix;
   int n;
   double x;
+  int pivotElement;
 
   tie(a_matrix, n) = readfile("a13-lgs1.dat");
   printLGS(a_matrix,n,n);
+
   //Dreiecksform
+  // ----------- OHNE PIVOT -------------
   if (pivot == 0) {
-    //bringt auf Dreiecksform
     for (size_t i = 0; i < n; i++) {
       //cout << "i " << i << endl; //DEBUG
       for (size_t j = (i+1); j < (n); j++) {
@@ -128,11 +157,37 @@ int main(int argc, char const *argv[]) {
         }
       }
     }
+    // ----------- MIT PIVOT -------------
   } else if (pivot == 1) {
+    for (size_t i = 0; i < n; i++) {
+      pivotElement = pivot_find(a_matrix,n,i);
+      a_matrix = line_swap(a_matrix,n,i,pivotElement);
+      //cout << pivotElement << endl; // DEBUG
+      //cout << "i " << i << endl; //DEBUG
+      //printLGS(a_matrix,n,n); // DEBUG
+      for (size_t j = (i+1); j < (n); j++) {
+        x = (a_matrix[j][i])/((double)a_matrix[i][i]);
+        x *= -1;
+        a_matrix = line_add(a_matrix, n, i, j, x);
+        //printLGS(a_matrix,n,n); // DEBUG
+        //cout << "j " << j << " x " << x << endl; //DEBUG
+      }
+    }
 
+    //Korrektur float additions fehler
+    for (size_t i = 0; i < n; i++) {
+      for (size_t j = 0; j < n; j++) {
+        double s = 1/(pow(10,12));
+        if ((abs(a_matrix[i][j]) <= s)&&(abs(a_matrix[i][j])>0)) {
+          a_matrix[i][j] = 0;
+        }
+      }
+    }
   } else {
     printf("ERROR! (pivot) \n");
   }
+
+  printLGS(a_matrix,n,n);
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
