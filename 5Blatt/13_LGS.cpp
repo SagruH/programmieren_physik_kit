@@ -105,15 +105,11 @@ int pivot_find(vector<vector<double>> matrix, int n, int e) {
   return pivotE;
 }
 
-/*
-for (size_t i = 0; i < n; i++) {
-  vector<double> temp;
-  temp = matrix[i];
-  temp.push_back(matrix[n][i]);
-  matrix[i] = temp;
+double multiplizieren(double a, double b){
+  double sol;
+  sol = a*b;
+  return sol;
 }
-matrix.pop_back();
-*/
 
 int main(int argc, char const *argv[]) {
   //Pivotiserungs abfrage
@@ -187,7 +183,26 @@ int main(int argc, char const *argv[]) {
     printf("ERROR! (pivot) \n");
   }
 
-  printLGS(a_matrix,n,n);
+  printLGS(a_matrix,n,n); //Dreiecksform
+
+  //Solve LGS
+  vector<double> sol;
+  double xval = 0;
+  double xtsum;
+
+  for (size_t i = n; i >= 0; i--) {
+    xtsum = a_matrix[n][i];
+    cout << "i" << i << endl;
+    for (size_t j = i; j < n; j++) {
+      cout << "j" << j << endl;
+      xtsum += (sol[n-j]*a_matrix[i][j-1]*(-1));
+    }
+    xval = xtsum/a_matrix[i][i];
+    printf("\n %5g ",xval); // DEBUG
+    sol.push_back(xval);
+  }
+
+
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
