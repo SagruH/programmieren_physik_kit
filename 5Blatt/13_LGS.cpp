@@ -46,7 +46,7 @@ void printLGS(vector<vector<double>> matrix, int n, int m) {
   printf("-----   LGS   -----\n");
   for (size_t i = 0; i < n; i++) {
     for (size_t j = 0; j < m; j++) {
-      printf("  %12g  ",matrix[i][j] );
+      printf("  %10g  ",matrix[i][j] );   // kann geändert werden um formatierung anzupassen
       if (j == (m-1)) printf(" | %6g\n",matrix[n][i] );
     }
   }
@@ -189,34 +189,23 @@ int main(int argc, char const *argv[]) {
   lsg_vector.push_back(xval);
   xtsum = xval;
 
-  for (size_t i = n-2; i >= 0; i--) {
+  for (int i = n-2; i >= 0; i--) {
     xtsum = 0;
     xtsum += a_matrix[n][i];
-    cout << "i" << i << endl; //DEBUG
-    for (size_t j = n-1; j > i; j--) {
+    //cout << "i" << i << endl; //DEBUG
+    for (int j = n-1; j > i; j--) {
       xtsum += (-1)*(a_matrix[i][j]*lsg_vector[(n-1)-j]);
-      cout << "j" << j << endl; //DEBUG
+      //cout << "j" << j << endl; //DEBUG
     }
     xval = xtsum/a_matrix[i][i];
-    printf("\nxval: %5g \n",xval); // DEBUG
+    //printf("\nxval: %5g \n",xval); // DEBUG
     lsg_vector.push_back(xval);
   }
 
-
-/*
-  for (size_t i = n; i >= 0; i--) {
-    xtsum = a_matrix[n][i];
-    cout << "i" << i << endl;
-    for (size_t j = i; j < n; j++) {
-      cout << "j" << j << endl;
-      xtsum += (sol[n-j]*a_matrix[i][j-1]*(-1));
-    }
-    xval = xtsum/a_matrix[i][i];
-    printf("\nxval: %5g \n",xval); // DEBUG
-    sol.push_back(xval);
+  printf("\n%s\n","Der Lösungsvector ist: " );
+  for (int i = 7; i >= 0; i--) {
+    printf("| %4g  ",lsg_vector[i] );
   }
-*/
-
 
 
 
