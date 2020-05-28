@@ -105,12 +105,6 @@ int pivot_find(vector<vector<double>> matrix, int n, int e) {
   return pivotE;
 }
 
-double multiplizieren(double a, double b){
-  double sol;
-  sol = a*b;
-  return sol;
-}
-
 int main(int argc, char const *argv[]) {
   //Pivotiserungs abfrage
   cout << "Mit Pivotisierung? (y / n)";
@@ -186,10 +180,30 @@ int main(int argc, char const *argv[]) {
   printLGS(a_matrix,n,n); //Dreiecksform
 
   //Solve LGS
-  vector<double> sol;
+  vector<double> lsg_vector;
   double xval = 0;
   double xtsum;
 
+  //fall 0
+  xval = (a_matrix[n][n-1]/a_matrix[n-1][n-1]);
+  lsg_vector.push_back(xval);
+  xtsum = xval;
+
+  for (size_t i = n-2; i >= 0; i--) {
+    xtsum = 0;
+    xtsum += a_matrix[n][i];
+    cout << "i" << i << endl; //DEBUG
+    for (size_t j = n-1; j > i; j--) {
+      xtsum += (-1)*(a_matrix[i][j]*lsg_vector[(n-1)-j]);
+      cout << "j" << j << endl; //DEBUG
+    }
+    xval = xtsum/a_matrix[i][i];
+    printf("\nxval: %5g \n",xval); // DEBUG
+    lsg_vector.push_back(xval);
+  }
+
+
+/*
   for (size_t i = n; i >= 0; i--) {
     xtsum = a_matrix[n][i];
     cout << "i" << i << endl;
@@ -198,9 +212,11 @@ int main(int argc, char const *argv[]) {
       xtsum += (sol[n-j]*a_matrix[i][j-1]*(-1));
     }
     xval = xtsum/a_matrix[i][i];
-    printf("\n %5g ",xval); // DEBUG
+    printf("\nxval: %5g \n",xval); // DEBUG
     sol.push_back(xval);
   }
+*/
+
 
 
 
