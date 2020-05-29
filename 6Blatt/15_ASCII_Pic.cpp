@@ -55,19 +55,22 @@ void printPicture(vector<int> content, int xsize) {
 }
 
 int main(int argc, char const *argv[]) {
-  //User Input
-  printf("%s\n","Which picture shall be shown?\nEnter a Number between 1 and 4." );
-  printf("%s\n","If you want to see all pictures press 0." );
   int picI;
-  cin >> picI;
-  auto t_start = chrono::high_resolution_clock::now();
   int allP = 0;
   vector<int> content;
   int xsize;
+
+  printf("%s\n","Which picture shall be shown?\nEnter a Number between 1 and 4." );
+  printf("%s\n","If you want to see all pictures press 0." );
+  cin >> picI;
+
+  auto t_start = chrono::high_resolution_clock::now();
+
   if (picI==0) {
     allP = 4;
     picI = 1;
   }
+
   do {
   string filename = picI == 1 ? "a15-bild1.dat" : picI == 2 ? "a15-bild2.dat" :
                     picI == 3 ? "a15-bild3.dat" : picI == 4 ? "a15-bild4.dat" : "ERROR";
