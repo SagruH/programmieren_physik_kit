@@ -10,7 +10,7 @@
 
 using namespace std;
 
-tuple<vector<int>, int> readfile(string filename){
+tuple<vector<int>, int> readfile(string filename){  //reads file
   fstream ffile;
   ffile.open(filename, ios::in);
   vector<int> content;
@@ -32,6 +32,7 @@ tuple<vector<int>, int> readfile(string filename){
   return make_tuple(content,xsize);
 }
 
+ //prints out picture with give file content and x-size
 void printPicture(vector<int> content, int xsize) {
   string dic[16]{".",",","\u02DC","=","+",":","?","$","7","8","D","I","M","N","O","Z"};
   int sign, num;
