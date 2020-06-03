@@ -48,13 +48,20 @@ int main(int argc, char const *argv[]) {
   printf("\n\nEnter x.\nTo exit the program enter 0.\n");
   cin >> x;
 
+  fstream output;
+  output.open("a16-interpol-res.dat", ios::app);
+
   while (x != 0) {
     fx = interpolynom(given_data, n, x);
     printf("\nf(%g) = %8g\n", x, fx);
+
+    output << x << "," << fx << endl;
+
     printf("Enter new x:  ");
     cin >> x;
-  }
+    }
 
+  output.close();
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
