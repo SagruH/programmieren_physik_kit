@@ -203,7 +203,7 @@ int main(int argc, char const *argv[]) {
   }
 
   printf("\n%s\n","Der Lösungsvector ist: " );
-  for (int i = 7; i >= 0; i--) {
+  for (int i = n-1; i >= 0; i--) {
     printf("| %4g  ",lsg_vector[i] );
   }
 
