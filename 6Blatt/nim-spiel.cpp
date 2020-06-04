@@ -6,9 +6,15 @@
 #include <chrono>
 #include <cstdlib>
 #include <ctime>
+#include <string>
 
 
 using namespace std;
+
+class pile;
+class player;
+
+
 
 //declaring classes: pile and player
 class pile{
@@ -32,6 +38,10 @@ public:
     }
   }
 };
+
+//declaring global pile
+pile pile1;
+pile pile2;
 
 class player{
 public:
@@ -70,9 +80,7 @@ private:
   }
 };
 
-//declaring global objects
-pile pile1;
-pile pile2;
+//declaring global player
 player player1;
 player player2;
 
@@ -104,21 +112,43 @@ void next_player() {
     player2.p_turn = 0;
     return;
   } else {
-    cout << "ERROR: Player turn management failure."
+    cout << "ERROR: Player turn management failure.";
   }
+}
+
+int move(int p, int x){
+
+
 }
 
 
 int main(int argc, char const *argv[]) {
   auto t_start = chrono::high_resolution_clock::now();
 
-  printf("Press a Number to choose a gamemode:\n1: One-PC Two Player mode.  ");
+  string full_Rules = "Rules:\nThere are 2 piles with matches.\nYou can take (x >= 1) matches either from one pile or from both piles.\nYou frist choose from where you would like to take the matches, then the amount.\nIf the input was valid the next player takes matches.\nThe player which takes the last match(es) wins.\nONLY ENTER INTEGERS!\n\n";
+  string rules ="First choose a pile:\nBoth: 0, Pile 1: 1, Pile 2: 2\nThen Enter the amount you like to take:\n";
+  int p, x;
+
+  printf("Press a Number to choose a gamemode:\n1: One-PC Two Player mode.\n");
   int gm;
   cin >> gm;
 
   ini_game(); //sets all values through RNG
 
   if (gm==1) {
+    int stat = 1;
+    cout << full_Rules;
+    if (player1.p_turn == 1) {
+      printf("Player%i starts!\n", player1.player_num);
+    } else if (player2.p_turn == 1) {
+      printf("Player%i starts!\n", player2.player_num);
+    }
+
+    do {
+      cout << rules;
+      cin >> p;
+      cin >> x;
+    } while(stat >= 0);
 
   } else if (gm == 2) {
     /* code */
