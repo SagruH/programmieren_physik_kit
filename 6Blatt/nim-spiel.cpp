@@ -116,8 +116,31 @@ void next_player() {
   }
 }
 
-int move(int p, int x){
+int move_gm1(int p, int x){
+  int stat;
+  if (player1.p_turn == 1) {
+    if (p == 0) {
+      stat = player1.both_pile(x);
+    } else {
+      stat = player1.one_pile(p,x);
+    }
+  } else if (player2.p_turn == 1) {
+    if (p == 0) {
+      stat = player2.both_pile(x);
+    } else {
+      stat = player2.one_pile(p,x);
+    }
+  }
 
+  if (stat==-1) {
+    cout << "Try Again" << endl;
+    return 0;
+  } else if (stat != -1) {
+    int end = ((player1.p_won == 1) || (player2.p_won == 1)) ? 1 : 0;
+    stat = (end == 1) ? -1 : 0;
+    next_player();
+    return stat;
+  }
 
 }
 
@@ -139,17 +162,32 @@ int main(int argc, char const *argv[]) {
     int stat = 1;
     cout << full_Rules;
     if (player1.p_turn == 1) {
-      printf("Player%i starts!\n", player1.player_num);
+      printf("Player %i starts!\n", player1.player_num);
     } else if (player2.p_turn == 1) {
-      printf("Player%i starts!\n", player2.player_num);
+      printf("Player %i starts!\n", player2.player_num);
     }
 
     do {
+      //Player info output
+      if (player1.p_turn == 1) {
+        printf("Player %i:\n", player1.player_num);
+      } else if (player2.p_turn == 1) {
+        printf("Player %i:\n", player2.player_num);
+      }
+      printf("Pile 1: %i | Pile 2: %i\n\n",pile1.num, pile2.num );
+      //Player interaction
       cout << rules;
       cin >> p;
       cin >> x;
-    } while(stat >= 0);
+      stat = move_gm1(p,x);
 
+    } while(stat >= 0);
+    //win text
+    if (player1.p_turn == 1) {
+      printf("Player%i has won!\n", player2.player_num);
+    } else if (player2.p_turn == 1) {
+      printf("Player%i has won!\n", player1.player_num);
+    }
   } else if (gm == 2) {
     /* code */
   } else {
