@@ -54,7 +54,7 @@ public:
     if (p==1) {
       stat = pile1.take(x);
     } else if (p==2) {
-      stat = pile1.take(x);
+      stat = pile2.take(x);
     } else {
       cout << "Invalid move: unknown pile!" << endl;
       return -1;
