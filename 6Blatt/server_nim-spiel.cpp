@@ -257,8 +257,46 @@ int main(int argc, char const *argv[]) {
     write(new_socket, &p1num, sizeof(p1num));
     write(new_socket, &p2num, sizeof(p2num));
     printf("Pile 1: %i | Pile 2: %i\n\n",pile1.num, pile2.num );
-    
+    if (player1.p_turn == 1) {
+      printf("Player %i:\n", player1.player_num);
+      int pts = htonl(1);
+      write(new_socket, &pts, sizeof(pts));
+    } else if (player2.p_turn == 1) {
+      printf("Player %i:\n", player2.player_num);
+      int pts = htonl(2);
+      write(new_socket, &pts, sizeof(pts));
+    }
+    //start game
+    do {
+      if (player1.p_turn == 1) {
+        printf("Your turn:\n");
+        printf("Pile 1: %i | Pile 2: %i\n\n",pile1.num, pile2.num );
+        cout << rules;
 
+        cin >> p;
+        cin >> x;
+        int p_con = htonl(p);
+        int x_con = htonl(x);
+        write(new_socket, &p_con, sizeof(p_con));
+        write(new_socket, &x_con, sizeof(x_con));
+        stat = move_gm1(p,x);
+
+
+      } else if (player2.p_turn == 1) {
+        printf("Opponents turn:\n");
+        valread = read(new_socket, &p, sizeof(p));
+        valread = read(new_socket, &x, sizeof(x));
+        p = ntohl(p);
+        x = ntohl(x);
+        stat = move_gm1(p,x);
+      }
+    } while(stat >=0);
+    
+    if (player1.p_turn == 1) {
+      printf("Player%i has won!\n", player2.player_num);
+    } else if (player2.p_turn == 1) {
+      printf("Player%i has won!\n", player1.player_num);
+    }
 
   }
 

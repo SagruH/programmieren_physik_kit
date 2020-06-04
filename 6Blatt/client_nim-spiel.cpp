@@ -240,8 +240,52 @@ int main(int argc, char const *argv[]) {
     valread = read(sock, &p2num, sizeof(p2num));
     pile1.num = ntohl(p1num);
     pile2.num = ntohl(p2num);
-
     printf("Pile 1: %i | Pile 2: %i\n\n",pile1.num, pile2.num );
+
+    int pts;
+    valread = read(sock, &pts, sizeof(pts));
+    if (player1.p_turn == pts) {
+      printf("Player %i:\n", player1.player_num);
+      player1.p_turn = 1;
+      player2.p_turn = 0;
+    } else {
+      player1.p_turn = 0;
+      player2.p_turn = 1;
+      printf("Player %i:\n", player2.player_num);
+    }
+
+    //start game
+    do {
+      if (player1.p_turn == 1) {
+        printf("Opponents turn:\n");
+        valread = read(sock, &p, sizeof(p));
+        valread = read(sock, &x, sizeof(x));
+        p = ntohl(p);
+        x = ntohl(x);
+        stat = move_gm1(p,x);
+
+      } else if (player2.p_turn == 1) {
+        printf("Your turn:\n");
+        printf("Pile 1: %i | Pile 2: %i\n\n",pile1.num, pile2.num );
+        cout << rules;
+
+        cin >> p;
+        cin >> x;
+        int p_con = htonl(p);
+        int x_con = htonl(x);
+        write(sock, &p_con, sizeof(p_con));
+        write(sock, &x_con, sizeof(x_con));
+        stat = move_gm1(p,x);
+      }
+    } while(stat >=0);
+
+    if (player1.p_turn == 1) {
+      printf("Player%i has won!\n", player2.player_num);
+    } else if (player2.p_turn == 1) {
+      printf("Player%i has won!\n", player1.player_num);
+    }
+
+
   }
 
   /*
