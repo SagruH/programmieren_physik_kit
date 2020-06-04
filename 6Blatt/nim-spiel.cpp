@@ -14,8 +14,6 @@ using namespace std;
 class pile;
 class player;
 
-
-
 //declaring classes: pile and player
 class pile{
 public:
@@ -152,7 +150,7 @@ int main(int argc, char const *argv[]) {
   string rules ="First choose a pile:\nBoth: 0, Pile 1: 1, Pile 2: 2\nThen Enter the amount you like to take:\n";
   int p, x;
 
-  printf("Press a Number to choose a gamemode:\n1: One-PC Two Player mode.\n");
+  printf("Press a Number to choose a gamemode:\n1: One-PC Two Player mode.\n2: Internet Multiplayer-mode.\n");
   int gm;
   cin >> gm;
 
@@ -189,12 +187,8 @@ int main(int argc, char const *argv[]) {
       printf("Player%i has won!\n", player1.player_num);
     }
   } else if (gm == 2) {
-    /* code */
-  } else {
-    /* code */
+    cout << "Use Server - Client Files and follow README instructions."<< endl;
   }
-
-
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
