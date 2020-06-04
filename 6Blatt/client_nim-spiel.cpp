@@ -178,12 +178,7 @@ int main(int argc, char const *argv[]) {
 		printf("\nInvalid address/ Address not supported \n");
 		return -1;
 	}
-  /*
-	send(sock , "hello" , strlen(hello) , 0 );
-	printf("Hello message sent\n");
-	valread = read( sock , buffer, 1024);
-	printf("%s\n",buffer );
-  */
+
   //Game Start
 
   printf("Press a Number to choose a gamemode:\n1: One-PC Two Player mode.\n2: Multiplayer Clientside\n");
@@ -192,7 +187,7 @@ int main(int argc, char const *argv[]) {
 
   ini_game(); //sets all values through RNG
 
-  if (gm==1) {
+  if (gm==1) {//One PC
     int stat = 1;
     cout << full_Rules;
     if (player1.p_turn == 1) {
@@ -222,7 +217,9 @@ int main(int argc, char const *argv[]) {
     } else if (player2.p_turn == 1) {
       printf("Player%i has won!\n", player1.player_num);
     }
-  } else if (gm == 2) {
+
+  } else if (gm == 2) { //Multiplayer Internet
+
     //connection to server
     cout << "Trying to connect..." << endl;
     if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
@@ -231,11 +228,30 @@ int main(int argc, char const *argv[]) {
       return -1;
     }
     cout << "Connection successful" << endl;
-    //game:
-    
+
+    //info
+    cout << full_Rules;
+    int stat = 1;
+    //game: // CLIENT IS PLAYER 2
+    cout << "YOU ARE PLAYER 2" << endl;
+    //sync with host
+    int p1num, p2num;
+    valread = read(sock, &p1num, sizeof(p1num));
+    valread = read(sock, &p2num, sizeof(p2num));
+    pile1.num = ntohl(p1num);
+    pile2.num = ntohl(p2num);
+
+    printf("Pile 1: %i | Pile 2: %i\n\n",pile1.num, pile2.num );
   }
 
-
+  /*
+  cin >> p;
+  cin >> x;
+  int p_con = htonl(p);
+  int x_con = htonl(x);
+  write(sock, &p_con, sizeof(p_con));
+  write(sock, &x_con, sizeof(x_con));
+  */
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc

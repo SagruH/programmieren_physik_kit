@@ -199,17 +199,7 @@ int main(int argc, char const *argv[]) {
     exit(EXIT_FAILURE);
   }
 
-
-  /*
-  valread = read( new_socket , buffer, 1024);
-  printf("%s\n",buffer );
-  send(new_socket , "hello" , strlen("hello") , 0 );
-  printf("Hello message sent\n");
-  */
-
-
-
-
+  //actual code
   printf("Press a Number to choose a gamemode:\n1: One-PC Two Player mode.\n2: Multiplayer Serverside\n");
   int gm;
   cin >> gm;
@@ -256,10 +246,29 @@ int main(int argc, char const *argv[]) {
       exit(EXIT_FAILURE);
     }
     cout << "Connection successful" << endl;
-    //game:
+    //info
+    cout << full_Rules;
+    int stat = 1;
+    //game: //HOST IS PLAYER 1
+    cout << "YOU ARE PLAYER 1" << endl;
+    //sync player 2 to player 1
+    int p1num = htonl(pile1.num);
+    int p2num = htonl(pile2.num);
+    write(new_socket, &p1num, sizeof(p1num));
+    write(new_socket, &p2num, sizeof(p2num));
+    printf("Pile 1: %i | Pile 2: %i\n\n",pile1.num, pile2.num );
     
+
+
   }
 
+
+    /*
+    valread = read(new_socket, &p, sizeof(p));
+    valread = read(new_socket, &x, sizeof(x));
+    cout << "p " << ntohl(p) << endl;
+    cout << "x " << ntohl(x) << endl;
+    */
 
 
   auto t_end = chrono::high_resolution_clock::now();
