@@ -10,7 +10,7 @@
 
 using namespace std;
 
-//declaring classes pile and player
+//declaring classes: pile and player
 class pile{
 public:
   int num;
@@ -35,6 +35,7 @@ public:
 
 class player{
 public:
+  int player_num;
   int p_turn;
   int p_won = 0;
 
@@ -75,7 +76,10 @@ pile pile2;
 player player1;
 player player2;
 
+// game functions
 void ini_game() {
+  player1.player_num = 1;
+  player2.player_num = 2;
   srand(time(NULL));
   int pile1num = rand() % 25 + 5;
   int pile2num = rand() % 25 + 5;
@@ -88,6 +92,19 @@ void ini_game() {
   } else {
     player1.p_turn = 0;
     player2.p_turn = 1;
+  }
+}
+void next_player() {
+  if (player1.p_turn == 1) {
+    player1.p_turn = 0;
+    player2.p_turn = 1;
+    return;
+  } else if (player2.p_turn == 1) {
+    player1.p_turn = 1;
+    player2.p_turn = 0;
+    return;
+  } else {
+    cout << "ERROR: Player turn management failure."
   }
 }
 
