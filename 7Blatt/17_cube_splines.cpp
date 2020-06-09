@@ -27,7 +27,10 @@ vector<double> M_calc(vector<vector<double>>& data, int n){
   lambda0 = myn = d0 = dn = 0;
   double my0 = 2;
 
-  vector<double> M_i;
+  vector<double> myi, di;
+  double t_f, tempmy, tempd;
+
+  vector<double> M_i(n+1);
 
   //lambdaj
   lambdaj.push_back(lambda0);
@@ -61,7 +64,41 @@ vector<double> M_calc(vector<vector<double>>& data, int n){
     printf("l: %9g  m: %9g  d: %9g\n",lambdaj[i], myj[i], dj[i] );
   }
   */
+
+  //myi & di
+  myi.push_back(my0);
+  di.push_back(d0);
+  for (int i = 1; i <= n; i++) {
+    t_f = -myj[i]/myj[i-1];
+    tempmy = 2+t_f*lambdaj[i-1];
+
+    tempd = dj[i] + t_f*dj[i-1];
+    myi.push_back(tempmy);
+    di.push_back(tempd);
+  }
+
+  //M
+  M_i[n] = di[n]/myi[n];
+  for (int i = n-1; i >= 0; i--) {
+    M_i[i] = (di[i]-lambdaj[i]*M_i[i+1])/myi[i];
+  }
+
+   //DEBUG
+  for (int i = 0; i <= n; i++) {
+    printf("%2i:  M: %12g  m: %12g  d: %12g\n",i , M_i[i], myi[i], di[i] );
+  }
+
+
   return M_i;
+}
+
+double S_Delta(vector<vector<double>>& data, int n,vector<double>& M){
+  double Sx;
+  vector<double> x = data[0];
+  vector<double> y = data[1];
+
+
+  return Sx;
 }
 
 
