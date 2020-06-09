@@ -175,7 +175,8 @@ int main(int argc, char const *argv[]) {
   }
   output.close();
 
-
+  system("python3 create_plot.py");
+  
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
   cout << endl << "Runtime: " << runtime.count() << "s\n";
