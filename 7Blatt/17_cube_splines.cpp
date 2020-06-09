@@ -141,6 +141,8 @@ int main(int argc, char const *argv[]) {
   auto t_start = chrono::high_resolution_clock::now();
 
   int n = 12;
+  int equi_n = 300;
+  int plot = 1;
   double x_in, Sy;
   vector<double> x, y;
   vector<vector<double>> data;
@@ -162,21 +164,30 @@ int main(int argc, char const *argv[]) {
   data.push_back(x);
   data.push_back(y);
 
-  M_i = M_calc(data,n); // berechnet den Vector Mi
+  // berechnet den Vector Mi
+  M_i = M_calc(data,n);
+  printf("Create Output file for n equidistant x values between %g and %g\n",x[0], x[n-1]);
+  printf("Enter n:  ");
+  cin >> equi_n;
+
 
   //calc S for 300 equi-distant x values and outputs in file
-  vector<double> linspace_vec = LinearSpacedArray(x[0], x[n-1], 300);
+  vector<double> linspace_vec = LinearSpacedArray(x[0], x[n-1], equi_n);
   fstream output;
   output.open("a17-cube-spline-res.dat", ios::out);
-  for (size_t i = 0; i < 300; i++) {
+  for (size_t i = 0; i < equi_n; i++) {
     x_in = linspace_vec[i];
     Sy = S_Delta(data, n, M_i, x_in);
     output << x_in << "," << Sy << endl;
   }
   output.close();
 
-  system("python3 create_plot.py");
-  
+  //opens plot
+  printf("To plot with python3 press 1, else press 0\n");
+  printf("Requirements: Linux with Python3, numpy and matplotlib\n");
+  cin >> plot;
+  if(plot == 1) system("python3 create_plot.py");
+
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
   cout << endl << "Runtime: " << runtime.count() << "s\n";
