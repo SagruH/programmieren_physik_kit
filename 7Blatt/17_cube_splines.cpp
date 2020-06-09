@@ -123,7 +123,7 @@ double S_Delta(vector<vector<double>>& data, int n,vector<double>& M, int x_in){
   return Sy;
 }
 
-// copy pasted from https://gist.github.com/mortenpi/f20a93c8ed3ee7785e65
+// copy pasted from https://gist.github.com/mortenpi/f20a93c8ed3ee7785e65#gistcomment-2362409
 // Linear interpolation following MATLAB linspace
     std::vector<double> LinearSpacedArray(double a, double b, std::size_t N)
     {
