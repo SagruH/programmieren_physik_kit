@@ -31,3 +31,18 @@ void printMatrix(vector<vector<double>> matrix, int n, int m) {
     cout << endl;
   }
 }
+
+
+// copy pasted from https://gist.github.com/mortenpi/f20a93c8ed3ee7785e65
+// Linear interpolation following MATLAB linspace
+    std::vector<double> LinearSpacedArray(double a, double b, std::size_t N)
+    {
+        double h = (b - a) / static_cast<double>(N-1);
+        std::vector<double> xs(N);
+        std::vector<double>::iterator x;
+        double val;
+        for (x = xs.begin(), val = a; x != xs.end(); ++x, val += h) {
+            *x = val;
+        }
+        return xs;
+    }
