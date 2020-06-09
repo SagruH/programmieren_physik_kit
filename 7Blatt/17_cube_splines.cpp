@@ -68,6 +68,8 @@ vector<double> M_calc(vector<vector<double>>& data, int n){
   //myi & di
   myi.push_back(my0);
   di.push_back(d0);
+  //myi = myj;
+  //dj = di;
   for (int i = 1; i <= n; i++) {
     t_f = -myj[i]/myj[i-1];
     tempmy = 2+t_f*lambdaj[i-1];
@@ -83,30 +85,64 @@ vector<double> M_calc(vector<vector<double>>& data, int n){
     M_i[i] = (di[i]-lambdaj[i]*M_i[i+1])/myi[i];
   }
 
-   //DEBUG
+  /* //DEBUG
   for (int i = 0; i <= n; i++) {
     printf("%2i:  M: %12g  m: %12g  d: %12g\n",i , M_i[i], myi[i], di[i] );
   }
-
+  */
 
   return M_i;
 }
 
-double S_Delta(vector<vector<double>>& data, int n,vector<double>& M){
-  double Sx;
+double S_Delta(vector<vector<double>>& data, int n,vector<double>& M, int x_in){
+  double Sy;
+  double alpha, beta, gamma, delta;
+  double tb1,tb2,tb3;
   vector<double> x = data[0];
   vector<double> y = data[1];
+  int j;
+  if ((x_in < x[0] || x_in > x[n-1])) {
+    printf("ERROR x not in interval!\n");
+    return 0;
+  }
+  //find j
+  for (int i = 0; i < n; i++) {
+    if ((x_in >= x[i]) && (x_in <= x[i+1])) j = i;
+  }
 
+  alpha = y[j];
+  tb1 = (y[j+1] - y[j])/(x[j+1] - x[j]);
+  tb2 = (2*M[j] + M[j+1])/6;
+  tb3 = x[j+1] - x[j];
+  beta = tb1 - tb2*tb3;
+  gamma = M[j]/2;
+  delta = (M[j+1] - M[j])/(6*(x[j+1] - x[j]));
 
-  return Sx;
+  Sy = alpha + beta*(x_in-x[j]) + gamma*pow((x_in-x[j]),2) + delta*pow((x_in-x[j]),3);
+
+  return Sy;
 }
 
+// copy pasted from https://gist.github.com/mortenpi/f20a93c8ed3ee7785e65
+// Linear interpolation following MATLAB linspace
+    std::vector<double> LinearSpacedArray(double a, double b, std::size_t N)
+    {
+        double h = (b - a) / static_cast<double>(N-1);
+        std::vector<double> xs(N);
+        std::vector<double>::iterator x;
+        double val;
+        for (x = xs.begin(), val = a; x != xs.end(); ++x, val += h) {
+            *x = val;
+        }
+        return xs;
+    }
 
 
 int main(int argc, char const *argv[]) {
   auto t_start = chrono::high_resolution_clock::now();
 
   int n = 12;
+  double x_in, Sy;
   vector<double> x, y;
   vector<vector<double>> data;
   vector<double> M_i;
@@ -129,8 +165,17 @@ int main(int argc, char const *argv[]) {
 
   M_i = M_calc(data,n); // berechnet den Vector Mi
 
-
-
+  //calc S for 300 equi-distant x values and outputs in file
+  vector<double> linspace_vec = LinearSpacedArray(x[0], x[n-1], 300);
+  fstream output;
+  output.open("a17-interpol-res.dat", ios::out);
+  for (size_t i = 0; i < 300; i++) {
+    x_in = linspace_vec[i];
+    Sy = S_Delta(data, n, M_i, x_in);
+    //output << x_in << "," << Sy << endl;
+    cout << x_in << endl;
+  }
+  output.close();
 
 
   auto t_end = chrono::high_resolution_clock::now();
