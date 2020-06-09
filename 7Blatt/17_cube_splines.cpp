@@ -16,7 +16,7 @@ vector<vector<double>> readfile(string filename, int n);
 
 //new functions
 //Berechnung von M
-vector<double> M_calc(vector<vector<double>>& data, int n){
+vector<double> M_calc(vector<vector<double>>& data, int n) {
   vector<double> x = data[0];
   vector<double> y = data[1];
 
@@ -94,7 +94,7 @@ vector<double> M_calc(vector<vector<double>>& data, int n){
   return M_i;
 }
 
-double S_Delta(vector<vector<double>>& data, int n,vector<double>& M, int x_in){
+double S_Delta(vector<vector<double>>& data, int n,vector<double>& M, int x_in) {
   double Sy;
   double alpha, beta, gamma, delta;
   double tb1,tb2,tb3;
@@ -125,17 +125,16 @@ double S_Delta(vector<vector<double>>& data, int n,vector<double>& M, int x_in){
 
 // copy pasted from https://gist.github.com/mortenpi/f20a93c8ed3ee7785e65#gistcomment-2362409
 // Linear interpolation following MATLAB linspace
-    std::vector<double> LinearSpacedArray(double a, double b, std::size_t N)
-    {
-        double h = (b - a) / static_cast<double>(N-1);
-        std::vector<double> xs(N);
-        std::vector<double>::iterator x;
-        double val;
-        for (x = xs.begin(), val = a; x != xs.end(); ++x, val += h) {
-            *x = val;
-        }
-        return xs;
+std::vector<double> LinearSpacedArray(double a, double b, std::size_t N) {
+  double h = (b - a) / static_cast<double>(N-1);
+  std::vector<double> xs(N);
+  std::vector<double>::iterator x;
+  double val;
+    for (x = xs.begin(), val = a; x != xs.end(); ++x, val += h) {
+        *x = val;
     }
+    return xs;
+  }
 
 
 int main(int argc, char const *argv[]) {
@@ -168,12 +167,11 @@ int main(int argc, char const *argv[]) {
   //calc S for 300 equi-distant x values and outputs in file
   vector<double> linspace_vec = LinearSpacedArray(x[0], x[n-1], 300);
   fstream output;
-  output.open("a17-interpol-res.dat", ios::out);
+  output.open("a17-cube-spline-res.dat", ios::out);
   for (size_t i = 0; i < 300; i++) {
     x_in = linspace_vec[i];
     Sy = S_Delta(data, n, M_i, x_in);
-    //output << x_in << "," << Sy << endl;
-    cout << x_in << endl;
+    output << x_in << "," << Sy << endl;
   }
   output.close();
 
