@@ -66,8 +66,8 @@ vector<double> M_calc(vector<vector<double>>& data, int n) {
   */
 
   //myi & di
-  //myi.push_back(my0);
-  //di.push_back(d0);
+  myi.push_back(my0);
+  di.push_back(d0);
   //myi = myj;
   //di = dj;
   for (int i = 1; i <= n; i++) {
@@ -94,7 +94,7 @@ vector<double> M_calc(vector<vector<double>>& data, int n) {
   return M_i;
 }
 
-double S_Delta(vector<vector<double>>& data, int n,vector<double>& M, int x_in) {
+double S_Delta(vector<vector<double>>& data, int n,vector<double>& M, double x_in) {
   double Sy;
   double alpha, beta, gamma, delta;
   double tb1,tb2,tb3;
@@ -186,7 +186,7 @@ int main(int argc, char const *argv[]) {
   printf("\nTo plot with python3 press 1, else press 0\n");
   printf("Requirements: Linux with Python3, numpy and matplotlib\n");
   //cin >> plot;
-  //if(plot == 1) system("python3 create_plot.py");
+  if(plot == 1) system("python3 create_plot.py");
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
