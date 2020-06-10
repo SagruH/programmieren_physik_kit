@@ -66,15 +66,8 @@ vector<double> M_calc(vector<vector<double>>& data, int n) {
   */
 
   //myi & di
-<<<<<<< HEAD
-  myi.push_back(my0);
-  di.push_back(d0);
-  //myi = myj;
-  //di = dj;
-=======
   myi = myj;
   di = dj;
->>>>>>> 7c4a8ebb224a5aacb37705628dec0dd71a52ec58
   for (int i = 1; i <= n; i++) {
     t_f = -myi[i]/myi[i-1];
     tempmy = 2+t_f*lambdaj[i-1];
