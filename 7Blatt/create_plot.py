@@ -32,15 +32,15 @@ def create_plot():
     f = open("a16-interpol.dat","r")
     data = np.loadtxt(f)
     data = np.array(data)
-    
+
     plt.plot(x,fx,'og', label = "Berechnete Punkte")
     for i in range(12):
         plt.plot(data[i][0],data[i][1],'or', label = "Gegebene Punkte")
 
 
-    plt.title("Polynom-Interpolation")
+    plt.title("Cubic-Spline")
     plt.xlabel("x")
-    plt.ylabel("fx")
+    plt.ylabel("f(x)")
     plt.legend()
     plt.grid(True)
     plt.show()
