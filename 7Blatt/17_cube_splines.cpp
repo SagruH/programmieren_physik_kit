@@ -82,11 +82,11 @@ vector<double> M_calc(vector<vector<double>>& data, int n) {
     M_i[i] = (di[i]-lambdaj[i]*M_i[i+1])/myi[i];
   }
 
-   //DEBUG
+  /* //DEBUG
   for (int i = 0; i <= n; i++) {
     printf("%2i:  M: %12g  m: %12g  d: %12g\n",i , M_i[i], myi[i], di[i] );
   }
-
+  */
 
   return M_i;
 }
@@ -165,11 +165,12 @@ int main(int argc, char const *argv[]) {
   M_i = M_calc(data,n);
   printf("Create Output file for n equidistant x values between %g and %g\n",x[0], x[n-1]);
   printf("Enter n:  ");
-  //cin >> equi_n;
+  cin >> equi_n;
 
 
   //calc S for 300 equi-distant x values and outputs in file
-  vector<double> linspace_vec = LinearSpacedArray(x[0], x[n-1], equi_n);
+  vector<double> linspace_vec = LinearSpacedArray(x[0], x[n-1], equi_n+1);
+  linspace_vec.pop_back();
   fstream output;
   output.open("a17-cube-spline-res.dat", ios::out);
   for (size_t i = 0; i < equi_n; i++) {
@@ -182,7 +183,7 @@ int main(int argc, char const *argv[]) {
   //opens plot
   printf("\nTo plot with python3 press 1, else press 0\n");
   printf("Requirements: Linux with Python3, numpy and matplotlib\n");
-  //cin >> plot;
+  cin >> plot;
   if(plot == 1) system("python3 create_plot.py");
 
   auto t_end = chrono::high_resolution_clock::now();
