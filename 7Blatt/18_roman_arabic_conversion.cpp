@@ -12,7 +12,7 @@
 
 using namespace std;
 
-int valrom(char& rom) {
+int val_of_rom(char& rom) {
   if        (rom == 'M') {
     return 1000;
   } else if (rom == 'D') {
@@ -40,16 +40,17 @@ int main(int argc, char const *argv[]) {
 
   int mode, n;
   int res = 0;
+  string rom_res;
   int arab_num;
   string rom_num;
   char ct;
   vector<int> vals;
 
-  printf("roman --> arabic (1)\narabic --> roman (2)\n");
-  cin >> mode;
+  printf("roman --> arabic\n");
+  mode = 1;
   if (mode == 1) { //rom -> arab
     printf("Enter Number: ");
-    //cin >> rom_num;
+    cin >> rom_num;
     cout << endl;
     //rom_num = "McCXlvI"; // DEBUG
     n = rom_num.length();
@@ -57,9 +58,9 @@ int main(int argc, char const *argv[]) {
     for (size_t i = 0; i < n; i++) {
       ct = to_upper(rom_num[i]);
       rom_num[i] = ct;
-      vals.push_back(valrom(ct));
+      vals.push_back(val_of_rom(ct));
     }
-    //left subtaction
+    //final calc
     for (int i = n-1; i >= 0; i--) {
       if (i == n-1) {
         res += vals[i];
@@ -70,19 +71,7 @@ int main(int argc, char const *argv[]) {
       }
     }
     cout << res << endl;
-
-
-  } else if (mode == 2) { // arab --> rom
-    printf("Enter Number: ");
-    cin >> arab_num;
-
-
-
-  } else {
-    printf("ERROR");
   }
-
-
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
