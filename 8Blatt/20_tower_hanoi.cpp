@@ -11,11 +11,15 @@
 
 using namespace std;
 
-int step_counter = 0;
-
-void tower(int n){
-
-
+void tower(int a, char from , char aux, char to) {
+  if (a == 1) {
+    printf("Move disk from %c to %c\n", from , to);
+    return;
+  } else {
+    tower(a-1, from, to, aux);
+    printf("Move disk from %c to %c\n", from , to);
+    tower(a-1, aux, from, to);
+  }
 }
 
 
@@ -41,10 +45,22 @@ int main(int argc, char const *argv[]) {
   auto t_start = chrono::high_resolution_clock::now();
 
   unsigned long long int steps = pow(2,n)-1;
-  printf("For (n = %i) %llu moves are expected.\n", n, steps);
+  printf("For (n = %i) %llu moves are expected.\n\n", n, steps);
+
+  if (n>63) {
+    printf("n to large\n");
+    return 0;
+  }
+  if (n>23) {
+    printf("Long runtime expected.\nDo you really want to continue with n = %i? (y/n)",n );
+    char cont;
+    cin >> cont;
+    if (cont != 'y') return 0;
+  }
+
+  tower(n, 'A', 'B', 'C');
 
 
-  cout << "Code does stuff... *beep* *boop*" << endl;
 
 
   auto t_end = chrono::high_resolution_clock::now();
