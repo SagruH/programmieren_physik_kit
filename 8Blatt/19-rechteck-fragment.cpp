@@ -29,7 +29,7 @@ rechteck rotation(rechteck r){ // <-- this is stupid!
 }
 
 bool bedeckt(rechteck r1, rechteck r2){
-  return ((r1.h == r2.h) && (r1.w == r2.w)) ? true : false;
+  return ((r1.h >= r2.h) && (r1.w >= r2.w)) ? true : false;
 }
 
 
@@ -37,7 +37,7 @@ int main()
 {
     cout << "Rechteckstuct" << endl ;
     rechteck r1 = {3.3, 2.0} ;
-    rechteck r2 = {2.0, 3.3} ;
+    rechteck r2 = {1.8, 2.7} ;
 
     cout << "Vor Rotation: " ;
     if (bedeckt(r1,r2))	cout << "r1 bedeckt r2." ;
