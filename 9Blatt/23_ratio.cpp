@@ -9,22 +9,32 @@
 
 using namespace std;
 
-class ratio {
+class ratio_num { //ratio is ambiguous
   long z;
   long n;
 public:
-  ratio(long z1 ,long n1) {
+  ratio_num(long z1 ,long n1) { //constuctor
     z = z1;
     n = n1;
   }
-
-
+  void kuerzen() {
+    //!TODO
+  }
+  void out() {
+    printf("%li/%li",z,n );
+  }
+  double tof() {
+    return z/(double)n;
+  }
 };
 
 
 int main(int argc, char const *argv[]) {
   auto t_start = chrono::high_resolution_clock::now();
 
+  ratio_num a(5,10);
+  a.out();
+  cout << endl << a.tof() << endl;
 
 
 
