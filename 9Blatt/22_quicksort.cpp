@@ -11,6 +11,7 @@
 
 using namespace std;
 
+
 void printv(vector<double> v) {
   for (size_t i = 0; i < v.size(); i++) {
     printf(" %f ",v[i]);
@@ -20,17 +21,17 @@ void printv(vector<double> v) {
 }
 
 void quicksort(vector<double> &v, int s, int t) {
-  system("sleep 1");
-  if ((t-s) <= 1) { //return if sub-list is to small
-    printf("If case\n");
+  //system("sleep 1"); //DEBUG
+  if (s >= t) { //return if sub-list is to small
+    //printf("If case\n"); //DEBUG
     return;
   }
   vector<double> hv1, hv2;
   int            ht = t;
   double         pve = v[s];
 
-  for ( s <= t; t--;) { // sort sub list
-    if (v[t] <= pve) {
+  for (; s <= t; t--) { // sort sub list
+    if (v[t] <  pve) {
       hv1.push_back(v[t]);
     } else if (v[t] > pve) {
       hv2.push_back(v[t]);
@@ -38,19 +39,20 @@ void quicksort(vector<double> &v, int s, int t) {
   }
 
   //put sublist back in original vector
-  v.erase (v.begin()+s, v.begin()+ht );
-  v.insert(v.begin()+s, hv1.begin(), hv1.end() );
-  v.insert((v.begin()+hv1.size()+s), hv2.begin(), hv2.end() );
+  v.erase (v.begin() + s, v.begin()+ht+1 );
+  v.insert(v.begin() + s, hv1.begin(), hv1.end() );
+  v.insert(v.begin() + s + hv1.size(), pve);
+  v.insert(v.begin() + s + hv1.size()+1, hv2.begin(), hv2.end() );
 
   vector<double>::iterator p = find(v.begin(), v.end(), pve);
   int pve_i = distance(v.begin(), p );
 
-  printv(v);
-  cout << endl << endl;
-  printf("lower half quicksort\n");
-  quicksort(v, s, pve_i);
+  //printv(v);    //DEBUG
+  //cout << endl << endl;
+  //printf("lower half quicksort\n");
+  quicksort(v, s, pve_i-1);
 
-  printf("upper half quicksort\n");
+  //printf("upper half quicksort\n");
   quicksort(v, pve_i+1, ht);
 }
 
@@ -58,7 +60,7 @@ int main(int argc, char const *argv[]) {
   auto t_start = chrono::high_resolution_clock::now();
 
   vector<double> val;
-  int n_rand = 20;
+  int n_rand = 1000;
 
 
   //Generate 1000 random numbers
@@ -67,12 +69,12 @@ int main(int argc, char const *argv[]) {
     val.push_back((rand()/(double)RAND_MAX));
   }
 
-  val.clear(); val = {10,1,2,7,0,8,6,3,4,9,5,11,12,17,14,15,16,13,18,19}; //DEBUG
+  //val.clear(); val = {10,1,2,7,0,8,6,3,4,9,5,11,12,17,14,15,16,13,18,19}; //DEBUG
   printv(val);
   cout << endl << endl;
 
   //quicksort
-  quicksort(val , 0 , n_rand);
+  quicksort(val , 0 , n_rand-1);
   printf("End result:\n");
   printv(val);
 
