@@ -9,6 +9,15 @@
 
 using namespace std;
 
+long euclid(long a, long b) { //euclid algo
+  if (b == 0) {
+    return a;
+  } else {
+    return euclid(b, (a % b) );
+  }
+}
+
+
 class ratio_num { //ratio is ambiguous
   long z;
   long n;
@@ -18,7 +27,13 @@ public:
     n = n1;
   }
   void kuerzen() {
-    //!TODO
+   long gcd = euclid(z,n);
+   z /= gcd;
+   n /= gcd;
+   if ((z < 0) && (n < 0) || (z > 0) && (n < 0)) {
+     z *= -1;
+     n *= -1;
+   }
   }
   void out() {
     printf("%li/%li",z,n );
@@ -27,7 +42,6 @@ public:
     return z/(double)n;
   }
 };
-
 
 int main(int argc, char const *argv[]) {
   auto t_start = chrono::high_resolution_clock::now();
