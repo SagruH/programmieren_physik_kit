@@ -4,8 +4,6 @@
 #include <iostream>
 #include <cmath>
 #include <chrono>
-#include <vector>
-
 
 using namespace std;
 
@@ -26,6 +24,33 @@ public:
     z = z1;
     n = n1;
   }
+  //operator overload
+  ratio_num operator + (ratio_num &other) {
+     ratio_num rr( (other.n*z + n*other.z), n*other.n );
+     rr.kuerzen();
+     return rr;
+  }
+  ratio_num operator - (ratio_num &other) {
+     ratio_num rr( (other.n*z - n*other.z), n*other.n );
+     rr.kuerzen();
+     return rr;
+  }
+  ratio_num operator * (ratio_num &other) {
+     ratio_num rr( z*other.z, n*other.n );
+     rr.kuerzen();
+     return rr;
+  }
+  ratio_num operator / (ratio_num &other) {
+     ratio_num rr( z*other.n, n*other.z );
+     rr.kuerzen();
+     return rr;
+  }
+  ratio_num operator - () { //unary
+     ratio_num rr( (z*-1), n );
+     rr.kuerzen();
+     return rr;
+  }
+  //functions
   void kuerzen() {
    long gcd = euclid(z,n);
    z /= gcd;
@@ -43,14 +68,26 @@ public:
   }
 };
 
+
+
 int main(int argc, char const *argv[]) {
   auto t_start = chrono::high_resolution_clock::now();
 
-  ratio_num a(5,10);
-  a.out();
-  cout << endl << a.tof() << endl;
+  ratio_num a(2,15);
+  ratio_num b(7,5);
+  ratio_num c(3,7);
+  ratio_num d(1,2);
+  ratio_num e(1,3);
+  ratio_num f(0,0);
+  ratio_num g(0,0);
 
 
+  g = -d + e;
+  g = c * g;
+  f = a / b;
+  f = f + g;
+  f.out();
+  cout << endl << f.tof() << endl;
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
