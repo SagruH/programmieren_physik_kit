@@ -5,6 +5,7 @@
 #include <cmath>
 #include <chrono>
 #include <vector>
+#include <numeric>
 
 
 using namespace std;
@@ -47,18 +48,33 @@ public:
 int main(int argc, char const *argv[]) {
   auto t_start = chrono::high_resolution_clock::now();
   srand(time(NULL));
-  
+
   normal_generator gen1;
   int n = pow(10,5);
   int ni = n;
   vector<double> x;
+  vector<double> x2;
 
-  while (ni > 0) {
+  double mean1;
+  double sqsum1;
+  double sigma1;
+
+  while (ni > 0) { //generate num vector x and x2
     ni--;
     x.push_back(gen1.get() );
+    x2.push_back(gen1.get() );
   }
 
+  //first set of numbers
+  mean1 = accumulate(x.begin(), x.end(), 0.0) / n;
+  sqsum1 = inner_product(x.begin(), x.end(), x.begin(), 0.0);
+  sigma1 = sqrt ( ( sqsum1 / n ) - (mean1*mean1) );
 
+  //second set of numbers
+  
+
+  //Output
+  printf("First set of numbers:\nmean: %f\n\u03C3: %f", mean1, sigma1 );
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
