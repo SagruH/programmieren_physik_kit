@@ -94,6 +94,6 @@ int main(int argc, char const *argv[]) {
 /*Zusatzfragen:
 1: in dem man die c++11 eigene klasse benutzt und nicht selbst sowas zusammen pfuscht
 2:für 10000 zahlen werden etwa 63,5k durchläufe der schleife gebraucht
-  --> (63,5 - 10)/10 = 5,35 also etwa 5,35 durchläufe
+  --> (2*63,5 - 100)/100 = 27/100 also etwa alle 4 durchläufe einen zusatz durchlauf
 
 */
