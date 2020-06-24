@@ -15,11 +15,13 @@ using namespace std;
 class normal_generator {
   bool stat;
   double num1, num2;
+  int sval;
 
   void num_gen() {
     double v1, v2;
     double s;
     do {
+      sval++;
       v1 = 2.0*rand() / (double)RAND_MAX - 1;
       v2 = 2.0*rand() / (double)RAND_MAX - 1;
       s = pow(v1,2) + pow(v2,2);
@@ -30,6 +32,7 @@ class normal_generator {
 public:
   normal_generator(){
     stat = false;
+    sval = 0;
   }
 
   double get() {
@@ -41,6 +44,9 @@ public:
       stat = true;
       return num1;
     }
+  }
+  void scount() {
+    cout << sval << endl;
   }
 };
 
@@ -71,10 +77,12 @@ int main(int argc, char const *argv[]) {
   sigma1 = sqrt ( ( sqsum1 / n ) - (mean1*mean1) );
 
   //second set of numbers
-  
+
 
   //Output
-  printf("First set of numbers:\nmean: %f\n\u03C3: %f", mean1, sigma1 );
+  printf("First set of numbers:\nmean: %f\n\u03C3: %f\n", mean1, sigma1 );
+
+  //gen1.scount(); // Zusatzfrage 2
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
@@ -82,3 +90,10 @@ int main(int argc, char const *argv[]) {
 
   return 0;
 }
+
+/*Zusatzfragen:
+1: in dem man die c++11 eigene klasse benutzt und nicht selbst sowas zusammen pfuscht
+2:für 10000 zahlen werden etwa 63,5k durchläufe der schleife gebraucht
+  --> (63,5 - 10)/10 = 5,35 also etwa 5,35 durchläufe
+
+*/
