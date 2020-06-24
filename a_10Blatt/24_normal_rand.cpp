@@ -61,9 +61,12 @@ int main(int argc, char const *argv[]) {
   vector<double> x;
   vector<double> x2;
 
-  double mean1;
-  double sqsum1;
-  double sigma1;
+  double mean1, mean2;
+  double sqsum1, sqsum2;
+  double sigma1, sigma2;
+  int s1 = 0, s2 = 0, s3 = 0;
+  double sp1, sp2, sp3;
+  double temp;
 
   while (ni > 0) { //generate num vector x and x2
     ni--;
@@ -77,12 +80,26 @@ int main(int argc, char const *argv[]) {
   sigma1 = sqrt ( ( sqsum1 / n ) - (mean1*mean1) );
 
   //second set of numbers
+  mean2 = accumulate(x2.begin(), x2.end(), 0.0) / n;
+  sqsum2 = inner_product(x2.begin(), x2.end(), x2.begin(), 0.0);
+  sigma2 = sqrt ( ( sqsum2 / n ) - (mean2*mean2) );
 
+  for (size_t i = 0; i < n; i++) {
+    temp = abs( x2[i] );
+    if ( temp >= sigma2+mean2)       s1++;
+    if ( temp >= 2*(sigma2+mean2) )  s2++;
+    if ( temp >= 3*(sigma2+mean2) )  s3++;
+  }
+  sp1 = (s1/(double)n)*100;
+  sp2 = (s3/(double)n)*100;
+  sp2 = (s3/(double)n)*100;
 
   //Output
-  printf("First set of numbers:\nmean: %f\n\u03C3: %f\n", mean1, sigma1 );
-
+  printf("First set of numbers:\nmean: %f\n\u03C3: %f\n\n", mean1, sigma1 );
+  printf("Second set of numbers:\nmean: %f\n\u03C3: %f\n", mean2, sigma2 );
+  printf("In 1*\u03C3: %f%%\nIn 2*\u03C3: %f%%\nIn 3*\u03C3: %f%%\n", sp1, sp2, sp3 );
   //gen1.scount(); // Zusatzfrage 2
+
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
