@@ -1,6 +1,8 @@
 
 // github: https://github.com/SagruH/programmieren_physik_kit
 
+
+
 #include <iostream>
 #include <cmath>
 #include <chrono>
@@ -11,6 +13,8 @@
 
 using namespace std;
 
+//This programm works but has really really shitty runtime,
+//only use this if you are really desperate
 
 void printv(vector<double> v) {
   for (size_t i = 0; i < v.size(); i++) {
