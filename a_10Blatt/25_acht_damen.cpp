@@ -41,15 +41,17 @@ void set_dame(vector<vector<bool>>& board, int n, int line, int col) {
 int main(int argc, char const *argv[]) {
   auto t_start = chrono::high_resolution_clock::now();
 
-  vector<bool>          btemp;
-  vector<vector<bool>>  board;
-  vector<int>           stemp{0,0};
-  vector<vector<int>>   sol;
+  vector<bool>                  btemp;
+  vector<vector<bool>>          board;
+  vector<vector<vector<bool>>>  b_hist;     //[version][line][col]
+  vector<int>                   stemp{0,0};
+  vector<vector<int>>           sol;
 
-  int                   n = 8;
-  int                   dame_count = 0;
+  int     n = 8;
+  int     line = 0;
+  bool    could_place = false;
 
-  for (size_t i = 0; i < n; i++) {
+  for (size_t i = 0; i < n; i++) {  //ini board
     for (size_t j = 0; j < n; j++) {
       btemp.push_back(true);
     }
@@ -57,11 +59,26 @@ int main(int argc, char const *argv[]) {
   }
 
   //Backtracking solution
-  while (sol.size() < 8) {
-    /* code */
+  while (sol.size() < n) {
+    printf("Sol size is %lu\n",sol.size() );
+    could_place = false;
+    b_hist.push_back(board);
+    while (!could_place) {                    //hist
+
+      for (size_t j = 0; j < n; j++) {      //col
+        if (board[line][j]) {
+          set_dame(board, n, line, j);
+          could_place = true;
+          stemp[0] = line;
+          stemp[1] = j;
+          sol.push_back(stemp);
+        }
+
+      }   //col loop end
+    }       //hist loop end
   }
 
-  cout << dame_count << endl;
+  cout << sol.size() << endl;
   printm(board,n,n);
 
 
