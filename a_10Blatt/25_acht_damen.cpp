@@ -19,10 +19,10 @@ void printm (vector<vector<bool>>& mat, int n, int m) { //prints truth board
   }
 }
 
-void set_dame(vector<vector<bool>>& board, int n, int line, int col) {
+bool set_dame(vector<vector<bool>>& board, int n, int line, int col) {
   if (!board[line][col]) {
     printf("ERROR: Invalid postion!\n");
-    return;
+    return false;
   }
   for (size_t i = 0; i < n; i++) { //block straight paths
     board[line][i] = false;
@@ -34,6 +34,7 @@ void set_dame(vector<vector<bool>>& board, int n, int line, int col) {
     if ( (line-i) >= 0 && (col-i) >= 0 ) board[line - i][col - i] = false;
     if ( (line-i) >= 0 && (col+i) < n  ) board[line - i][col + i] = false;
   }
+  return true;
 }
 
 
@@ -46,10 +47,14 @@ int main(int argc, char const *argv[]) {
   vector<vector<vector<bool>>>  b_hist;     //[version][line][col]
   vector<int>                   stemp{0,0};
   vector<vector<int>>           sol;
+  vector<vector<vector<int>>>   all_sol;
 
   int     n = 8;
   int     line = 0;
   bool    could_place = false;
+
+  bool    backtracking = false;
+  bool    bruteforce = true;
 
   for (size_t i = 0; i < n; i++) {  //ini board
     for (size_t j = 0; j < n; j++) {
@@ -58,6 +63,7 @@ int main(int argc, char const *argv[]) {
     board.push_back(btemp);
   }
 
+  if (backtracking == true) {
   //Backtracking solution
   while (sol.size() < n) {
     printf("Sol size is %lu\n",sol.size() );
@@ -80,7 +86,23 @@ int main(int argc, char const *argv[]) {
 
   cout << sol.size() << endl;
   printm(board,n,n);
+  }
 
+  if (bruteforce == true) {
+    for (size_t i = 0; i < n; i++) {
+      for (size_t j = 0; j < n; j++) {n
+        set_dame(board, n, line, j);
+        could_place = true;
+        stemp[0] = line;
+        stemp[1] = j;
+        sol.push_back(stemp);
+      }
+    }
+
+
+
+
+  }
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
