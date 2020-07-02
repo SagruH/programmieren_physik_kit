@@ -20,7 +20,7 @@ void printm (vector<vector<bool>>& mat, int n, int m) { //prints truth board
 }
 
 bool set_dame(vector<vector<bool>>& board, int n, int line, int col) {
-  cout << "dame" << endl;
+  //cout << "dame" << endl; //DEBUG
   int i , j;
 
   if (!board[line][col]) return false;
@@ -39,35 +39,20 @@ bool set_dame(vector<vector<bool>>& board, int n, int line, int col) {
 }
 
 bool bt_algo (vector<vector<bool>>& board, int n, int col) {
-    cout << "algo" << endl;
-    /* base case: If all queens are placed
-      then return true */
+    //cout << "algo" << endl; //DEBUG
+
     if (col >= n)
         return true;
 
-    /* Consider this column and try placing
-       this queen in all rows one by one */
     for (int i = 0; i < n; i++) {
-        /* Check if the queen can be placed on
-          board[i][col] */
           cout << i << endl;
         if (set_dame(board, n, i, col)) {
-            /* Place this queen in board[i][col] */
             board[i][col] = false;
-
-            /* recur to place rest of the queens */
             if (bt_algo(board, n, col + 1))
                 return true;
-
-            /* If placing queen in board[i][col]
-               doesn't lead to a solution, then
-               remove queen from board[i][col] */
             board[i][col] = true; // BACKTRACK
         }
     }
-
-    /* If the queen cannot be placed in any row in
-        this colum col  then return false */
     return false;
 }
 
@@ -77,7 +62,7 @@ int main(int argc, char const *argv[]) {
 
   vector<bool>                  btemp;
   vector<vector<bool>>          board;
-  int                           n = 4;
+  int                           n = 8; // can be easily changed, shoud work
 
   for (size_t i = 0; i < n; i++) {  //ini board
     for (size_t j = 0; j < n; j++) {
