@@ -20,21 +20,26 @@ void printm (vector<vector<bool>>& mat, int n, int m) { //prints truth board
 }
 
 bool set_dame(vector<vector<bool>>& board, int n, int line, int col) {
+  bool stat;
   if (!board[line][col]) {
-    printf("ERROR: Invalid postion!\n");
+    //printf("ERROR: Invalid postion!\n");
     return false;
   }
-  for (size_t i = 0; i < n; i++) { //block straight paths
-    board[line][i] = false;
-    board[i][col]  = false;
+  for (size_t i = 0; i < n; i++) { //check straight paths
+    if ( !board[line][i] ) stat = false;
+    if ( !board[i][col]  ) stat = false;
   }
-  for (int i = 0; i <= n-1; i++) { //block diagonal paths
-    if ( (line+i) < n  && (col+i) < n  ) board[line + i][col + i] = false;
-    if ( (line+i) < n  && (col-i) >= 0 ) board[line + i][col - i] = false;
-    if ( (line-i) >= 0 && (col-i) >= 0 ) board[line - i][col - i] = false;
-    if ( (line-i) >= 0 && (col+i) < n  ) board[line - i][col + i] = false;
+  for (int i = 0; i <= n-1; i++) { //check diagonal paths
+    if ( !((line+i) < n  && (col+i) < n  ) ) stat = false;
+    if ( !((line+i) < n  && (col-i) >= 0 ) ) stat = false;
+    if ( !((line-i) >= 0 && (col-i) >= 0 ) ) stat = false;
+    if ( !((line-i) >= 0 && (col+i) < n  ) ) stat = false;
   }
-  return true;
+  return stat;
+}
+
+bool bt_algo (vector<vector<bool>> board, vector<int> sol, int n, int cn) {
+
 }
 
 
@@ -53,8 +58,8 @@ int main(int argc, char const *argv[]) {
   int     line = 0;
   bool    could_place = false;
 
-  bool    backtracking = false;
-  bool    bruteforce = true;
+  bool    backtracking = true;
+  bool    bruteforce = false;
 
   for (size_t i = 0; i < n; i++) {  //ini board
     for (size_t j = 0; j < n; j++) {
@@ -65,32 +70,17 @@ int main(int argc, char const *argv[]) {
 
   if (backtracking == true) {
   //Backtracking solution
-  while (sol.size() < n) {
-    printf("Sol size is %lu\n",sol.size() );
-    could_place = false;
-    b_hist.push_back(board);
-    while (!could_place) {                    //hist
 
-      for (size_t j = 0; j < n; j++) {      //col
-        if (board[line][j]) {
-          set_dame(board, n, line, j);
-          could_place = true;
-          stemp[0] = line;
-          stemp[1] = j;
-          sol.push_back(stemp);
-        }
-
-      }   //col loop end
-    }       //hist loop end
-  }
-
-  cout << sol.size() << endl;
+  //if (bt_algo(board, 0) == false) {
+  //    printf("Solution does not exist");
+  //    return false;
+  //}
   printm(board,n,n);
   }
 
   if (bruteforce == true) {
     for (size_t i = 0; i < n; i++) {
-      for (size_t j = 0; j < n; j++) {n
+      for (size_t j = 0; j < n; j++) {
         set_dame(board, n, line, j);
         could_place = true;
         stemp[0] = line;
