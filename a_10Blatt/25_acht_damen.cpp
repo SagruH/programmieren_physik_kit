@@ -45,7 +45,7 @@ bool bt_algo (vector<vector<bool>>& board, int n, int col) {
         return true;
 
     for (int i = 0; i < n; i++) {
-          cout << i << endl;
+          //cout << i << endl; //DEBUG
         if (set_dame(board, n, i, col)) {
             board[i][col] = false;
             if (bt_algo(board, n, col + 1))
