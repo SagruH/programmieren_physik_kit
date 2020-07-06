@@ -38,7 +38,7 @@ double nullstellen (double (*f)(double), double x0, double x1, double epsx, doub
     if (fx_test > 0) x1 = x_test;
     if (fx_test < 0) x0 = x_test;
 
-    printf("%3i:f(x) = %10f\n", i, fx_test );
+    printf("%3i: x0 = %10f , x1 = %10f , f(x) = %10f\n", i, x0, x1, fx_test );
     i++;
   } while( (abs(x1-x0) >= epsx) || (abs( f(x_test) ) >= epsf) );
   cout << endl;
