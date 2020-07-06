@@ -17,20 +17,32 @@ double test_func2 (double x) {
 }
 
 double nullstellen (double (*f)(double), double x0, double x1, double epsx, double epsf) {
-  double x_test;
+  double  x_test;
+  double  fx_test;
+  int     i = 0;
 
   if( (f(x0) > 0 && f(x1) > 0) || (f(x0) < 0 && f(x1) < 0) ) {
     printf("Keine Nullstelle im Intervall.\n");
     return 1;
   }
-  if ( f(x0 > 0) ) { //x0 immer kleiner 0, x1 immer größer 0
+  if ( f(x0) > 0 ) { //x0 immer kleiner 0, x1 immer größer 0
     double t = x1;
     x1 = x0;
     x0 = t;
   }
 
+  do {
+    //system("sleep 0.5"); // DEBUG
+    x_test  = (x0+x1)/(double)2.0;
+    fx_test = f(x_test);
+    if (fx_test > 0) x1 = x_test;
+    if (fx_test < 0) x0 = x_test;
 
-
+    printf("%3i:f(x) = %10f\n", i, fx_test );
+    i++;
+  } while( (abs(x1-x0) >= epsx) || (abs( f(x_test) ) >= epsf) );
+  cout << endl;
+  return x_test;
 }
 
 int main(int argc, char const *argv[]) {
@@ -46,12 +58,13 @@ int main(int argc, char const *argv[]) {
 
   double (*funcPtr)(double) { test_func1 };
 
+  cout << "Function 1:" << endl;
   ns1 = nullstellen(funcPtr, f1x0, f1x1, epsx, epsf);
-  cout << ns1 << endl;
+  cout << "Function 2:" << endl;
+  funcPtr = test_func2;
+  ns2 = nullstellen(funcPtr, f2x0, f2x1, epsx, epsf);
 
-  //code
-
-
+  printf("Die Nullstellen sind:\n1. %10f\n2. %10f", ns1, ns2 );
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
