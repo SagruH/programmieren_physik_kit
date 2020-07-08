@@ -86,20 +86,22 @@ int main(int argc, char const *argv[]) {
 
   for (size_t i = 0; i < n; i++) {
     temp = abs( x2[i] );
-    if ( temp >= sigma2+mean2)       s1++;
-    if ( temp >= 2*(sigma2+mean2) )  s2++;
-    if ( temp >= 3*(sigma2+mean2) )  s3++;
+    if ( temp >= (1 * sigma2) + mean2  )  s1++;
+    if ( temp >= (2 * sigma2) + mean2  )  s2++;
+    if ( temp >= (3 * sigma2) + mean2  )  s3++;
   }
   sp1 = (s1/(double)n)*100;
-  sp2 = (s3/(double)n)*100;
-  sp2 = (s3/(double)n)*100;
+  sp2 = (s2/(double)n)*100;
+  sp3 = (s3/(double)n)*100;
 
   //Output
   printf("First set of numbers:\nmean: %f\n\u03C3: %f\n\n", mean1, sigma1 );
   printf("Second set of numbers:\nmean: %f\n\u03C3: %f\n", mean2, sigma2 );
   printf("In 1*\u03C3: %f%%\nIn 2*\u03C3: %f%%\nIn 3*\u03C3: %f%%\n", sp1, sp2, sp3 );
   //gen1.scount(); // Zusatzfrage 2
-
+  printf("Vergleich: Abweichung von mean x1 und x2: %f\n",(mean1-mean2 ) );
+  printf("Vergleich: Abweichung von Stdabweichung x1 und x2: %f\n",(sigma1-sigma2) );
+  printf("Diese ist sehr klein, Aufgrund des hohen n.\n");
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
