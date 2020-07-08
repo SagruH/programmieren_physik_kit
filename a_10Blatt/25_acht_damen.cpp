@@ -17,6 +17,7 @@ void printm (vector<vector<bool>>& mat, int n, int m) { //prints truth board
     }
     cout << " | " << endl;
   }
+  cout << endl;
 }
 
 bool set_dame(vector<vector<bool>>& board, int n, int line, int col) {
@@ -41,25 +42,24 @@ bool set_dame(vector<vector<bool>>& board, int n, int line, int col) {
 bool bt_algo (vector<vector<bool>>& board, int n, int col) {
     //cout << "algo" << endl; //DEBUG
 
-    if (col >= n)
-        return true;
+    if (col >= n) {
+      printm  (board, n, n);
+      return true;
+    }
 
+    bool res = false;
     for (int i = 0; i < n; i++) {
           //cout << i << endl; //DEBUG
-        if (set_dame(board, n, i, col)) {
+        if ( set_dame(board, n, i, col) ) {
             board[i][col] = false;
-            if (bt_algo(board, n, col + 1))
-                return true;
+            res = bt_algo(board, n, col + 1) || res;
             board[i][col] = true; // BACKTRACK
         }
     }
-    return false;
+    return res;
 }
 
-
-int main(int argc, char const *argv[]) {
-  auto t_start = chrono::high_resolution_clock::now();
-
+void solve_queen() {
   vector<bool>                  btemp;
   vector<vector<bool>>          board;
   int                           n = 8; // can be easily changed, shoud work
@@ -70,9 +70,21 @@ int main(int argc, char const *argv[]) {
     }
     board.push_back(btemp);
   }
+
+  if ( !bt_algo(board, n, 0) ) {
+    printf("no sol");
+    return ;
+  }
+
+return ;
+}
+
+int main(int argc, char const *argv[]) {
+  auto t_start = chrono::high_resolution_clock::now();
+
   //backtracking
-  bt_algo (board, n, 0);
-  printm  (board, n, n);
+  solve_queen();
+
 
   auto t_end = chrono::high_resolution_clock::now();
   chrono::duration<double> runtime = t_end - t_start; // runtime calc
