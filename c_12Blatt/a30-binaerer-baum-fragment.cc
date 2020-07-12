@@ -24,13 +24,18 @@ public:
     }
 
     void insert (double x) {
-      // TODO
+      Node nd(x);
+
 
     }
 
     double min() {
       //TODO
       return 0;
+    }
+    friend ostream& operator << (ostream& o, Node& nd) {
+      o << nd.value;
+
     }
 };
 
@@ -45,5 +50,5 @@ int main()
 	tree.insert(x) ;
     }
     cout << "Die minimale Zahl im Baum ist: " << tree.min() << endl ;
-    //cout << "Alle Eintraege sortiert: " << endl << "  " << tree << endl ;
+    cout << "Alle Eintraege sortiert: " << endl << "  " << tree << endl ;
 }
