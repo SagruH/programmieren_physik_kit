@@ -24,7 +24,16 @@ public:
     }
 
     void insert (double x) {
-      Node nd(x);
+      Node *nd = new Node(x);
+      if (left == NULL) {
+        left = nd;
+      } else {
+
+      }
+
+      //double y = left -> value;
+      //cout << y << endl;
+
 
 
     }
@@ -34,7 +43,8 @@ public:
       return 0;
     }
     friend ostream& operator << (ostream& o, Node& nd) {
-      o << nd.value;
+      o << nd.value << endl;
+      o << nd.left->value << endl;
 
     }
 };
