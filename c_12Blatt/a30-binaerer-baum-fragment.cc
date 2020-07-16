@@ -25,17 +25,15 @@ public:
 
     void insert (double x) {
       Node *nd = new Node(x);
+      Node *temp = left;
       if (left == NULL) {
         left = nd;
       } else {
-
+        while (temp -> left != NULL) {
+          temp = temp -> left;
+        }
+        temp -> left = nd;
       }
-
-      //double y = left -> value;
-      //cout << y << endl;
-
-
-
     }
 
     double min() {
@@ -43,9 +41,10 @@ public:
       return 0;
     }
     friend ostream& operator << (ostream& o, Node& nd) {
-      o << nd.value << endl;
-      o << nd.left->value << endl;
-
+      if (0 != nd.left) o << *(nd.left);
+      o << nd.value << " ";
+      if (0 != nd.right) o << *(nd.right);
+      return o;
     }
 };
 
