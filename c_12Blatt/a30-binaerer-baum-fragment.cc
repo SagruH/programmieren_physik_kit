@@ -25,21 +25,30 @@ public:
 
     void insert (double x) {
       Node *nd = new Node(x);
-      Node *temp = left;
-      if (left == NULL) {
-        left = nd;
-      } else {
-        while (temp -> left != NULL) {
-          temp = temp -> left;
+      if (x <= value) {
+        if (left == 0) {
+          left = nd;
+        } else {
+          left -> insert(x);
         }
-        temp -> left = nd;
+      } else { // x > value
+        if (right == 0) {
+          right = nd;
+        } else {
+          right -> insert(x);
+        }
       }
+      return;
     }
 
     double min() {
-      //TODO
-      return 0;
+      if (left == 0) {
+        return value;
+      } else {
+        return left -> min();
+      }
     }
+
     friend ostream& operator << (ostream& o, Node& nd) {
       if (0 != nd.left) o << *(nd.left);
       o << nd.value << " ";
