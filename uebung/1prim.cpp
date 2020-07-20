@@ -41,6 +41,8 @@ public:
       int arr_size;
       int *arr;
       int tnum;
+      int s = 0;
+      int ind = 0;
       //FILL ARRAY
       if (old_upper_limit == 0) {
         arr_size = upper_limit - 1;
@@ -59,14 +61,43 @@ public:
         }
       }
       //calc primes
-      printarr(arr, arr_size);
+      //printarr(arr, arr_size); //DEBUG
       for (int i = 0; i < arr_size; i++) {
-        
+        if (arr[i]) {
+          tnum = arr[i];
+          if (tnum >= upper_limit/2) break;
+          for (int j = i+1; j < arr_size; j++) {
+            if ( (arr[j] % tnum) == 0 ) arr[j] = 0;
+          }
+        }
       }
+      //printarr(arr, arr_size); //DEBUG
 
+      //calc new size
+      for (int i = 0; i < arr_size; i++) {
+        if (arr[i]) {
+          s++;
+        }
+      }
+      size = s;
+      delete [] prime_list;
+      prime_list = new int[size];
 
-      printarr(arr, arr_size);
+      //fill prime list
+      for (int i = 0; i < arr_size; i++) {
+        if (arr[i]) {
+          prime_list[ind] = arr[i];
+          ind++;
+        }
+      }
       old_upper_limit = upper_limit;
+    }
+
+    void print () {
+      printarr( prime_list, size);
+    }
+    void give_size () {
+      cout << size << endl;
     }
 
 };
@@ -75,9 +106,9 @@ public:
 int main(int argc, char const *argv[]) {
   auto t_start = chrono::high_resolution_clock::now();
   prime_gen pg(100);
-  cout << "next\n";
   pg.set_new_ul(200);
-
+  pg.set_new_ul(10000);
+  pg.give_size();
 
 
 
